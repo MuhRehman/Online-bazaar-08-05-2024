@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import users from "../components/UserList";
 import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom";
+import { BooksContext } from "../App";
+import { useContext } from 'react';
 
-export default function Searchproduct() {
+export default function Searchproduct({ productDataObj, size }) {
   const [products1, setproducts] = useState("");
   const [productsItem, setproductsItem] = useState("");
   const [productsSearchResult, setproductsSearchResult] = useState("");
   const [userList, setUsers] = useState([]);
   const [search, setSearch] = useState(null);
   const [category, setCategory] = useState(null);
+
+
+  const context = useContext(BooksContext);
+
+
 
   var data1 = [
     {
@@ -75,29 +82,32 @@ export default function Searchproduct() {
   useEffect(() => {
     // setproductlist(data1);
     // alert("ddd");
-    console.log(products1);
+    console.log("products---" , productDataObj);
     getUsers(userList);
 
-    fetch("http://localhost/backend/productdata.php")
-      .then((data) => data.json())
-      .then((data) => {
-        // alert("Fatch call..");
-        // console.log(data[0]);
-        setproductsItem(data[0]);
-        setproductsSearchResult(data[0]);
+    // fetch("http://localhost/backend/productdata.php")
+    //   .then((data) => data.json())
+    //   .then((data) => {
+    //     // alert("Fatch call..");
+    //     // console.log(data[0]);
+    //     setproductsItem(data[0]);
+       
         
-        
-      });
+    //     console.log("productsItem -- 1",productsSearchResult);
+    //   });
 
-  }, []);
+      setTimeout(function() { setproductsSearchResult(productDataObj) }, 1000);
 
+  }, [productDataObj]);
+   
   // console.log(productsItem,"Products Item Search");
+   
 
-
-  const handleSearch = (e) => {
+    const handleSearch = (e) => {
     const query = e.target.value;
+    
     // setSearchQuery(query);
-    const filteredData = productsItem.filter(item =>
+    const filteredData = productDataObj.filter(item =>
       item.pname.toLowerCase().includes(query.toLowerCase())
     );
     setproductsSearchResult(filteredData);
@@ -173,6 +183,37 @@ export default function Searchproduct() {
 			
 		</form>
 	</div> */}
+
+<div>
+      <h2>
+        {/* <span>Books1 {person}</span> */}
+        <span>Books1 {size}</span>
+        {/* <div >My Cart({totalCartCount})</div> */}
+      </h2>
+      {/* {context.state.booklist.map((book) => (
+        <div key={book.id} className="book">
+          <img src={book.image} alt={book.name} />
+          <div>
+            <h4>{book.name}</h4>
+            <p>Author: {book.author}</p>
+            <p>Price: &#8378; {book.price}</p>
+            <button onClick={() => context.addToCart(book)}>Add to Cart</button>
+          </div>
+        </div>
+      ))} */}
+      {/* <div className="book">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/I/51eqjXwFzwL._SX344_BO1,204,203,200_.jpg"
+          alt="Simyaci"
+        />
+        <div>
+          <h4>Simyaci</h4>
+          <p>Yazar: Paulo Coelho</p>
+          <p>Fiyat: &#8378; 19.99</p>
+          <button>Sepete Ekle</button>
+        </div>
+      </div> */}
+    </div>
         <div>
           <div className="row">
             <div className="col-12 m-5 row">
@@ -220,7 +261,7 @@ export default function Searchproduct() {
               productsSearchResult.map((productitemlist) => (
                 <div className="card col-3 ">
                {/* <Link className="btn-item auction-btn mr-2" to={`/productdetail/${productitemlist.id}`}> */}
-               <Link className="btn-item auction-btn mr-2"  to={`/productdetail/${productitemlist.id}`}>
+               {/* <Link className="btn-item auction-btn mr-2"  to={`/productdetail/${productitemlist.id}`}> */}
                {/* <Link className="btn-item auction-btn mr-2" to={`/productDetails/${productitemlist.id}`}> */}
 
 
@@ -231,13 +272,14 @@ export default function Searchproduct() {
                     />
                    {/* <p> {productitemlist.pimg}</p> */}
                    <div className="card-body">
-                    <h3>Name : <span>{productitemlist.pname}</span></h3>
+                    <h3>Name  : <span>{productitemlist.pname}</span></h3>
                     <p> Brand : <span>{productitemlist.pmname}</span></p>
                     <p> Price :<span>{productitemlist.pprice}</span></p>
-                    <h6> Type : {productitemlist.ptype}</h6>
+                    <h6>Type  : {productitemlist.ptype}</h6>
                     <button>Add to Cart</button>
+                    <button onClick={() => context.addToCart(productitemlist)}>Add Context to Cart</button>
                    </div>
-                   </Link>
+                   {/* </Link> */}
                   </div>
              
               ))
@@ -249,6 +291,43 @@ export default function Searchproduct() {
               </div>
             )}
           </div>
+          {/* <div className="card-wrapper mt-4">
+         
+
+            {productsSearchResult.length ? (
+              productsSearchResult.map((productitemlist) => (
+                <div className="card col-3 "> */}
+               {/* <Link className="btn-item auction-btn mr-2" to={`/productdetail/${productitemlist.id}`}> */}
+               {/* <Link className="btn-item auction-btn mr-2"  to={`/productdetail/${productitemlist.id}`}> */}
+               {/* <Link className="btn-item auction-btn mr-2" to={`/productDetails/${productitemlist.id}`}> */}
+
+
+                    {/* <img
+                      className="card-img-top"
+                      src={`http://localhost/backend/upload/${productitemlist.pimg}`}
+                      alt=""
+                    /> */}
+                   {/* <p> {productitemlist.pimg}</p> */}
+                   {/* <div className="card-body">
+                    <h3>Name  : <span>{productitemlist.pname}</span></h3>
+                    <p> Brand : <span>{productitemlist.pmname}</span></p>
+                    <p> Price :<span>{productitemlist.pprice}</span></p>
+                    <h6>Type  : {productitemlist.ptype}</h6>
+                    <button>Add to Cart</button>
+                    <button onClick={() => context.addToCart(productitemlist)}>Add Context to Cart</button>
+                   </div> */}
+                   {/* </Link> */}
+                  {/* </div>
+             
+              ))
+            ) : (
+              <div>
+                <div id="spinner" class="container">
+                  <div class="loading"></div>
+                </div>
+              </div>
+            )}
+          </div> */}
           {/* <div className="row mt-4">
             {filteredList(users, category, search).map((user) => (
               <div className="card col-3 m-3">
