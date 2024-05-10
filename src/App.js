@@ -15,6 +15,7 @@ import ProductDetail from "./pages/ProductDetail.jsx";
 import Home from "./pages/Home.jsx";
 import { useState, useEffect, useRef } from "react";
 import ShopCart from "./components/ShopCart.jsx";
+import Checkout from "./pages/Checkout.jsx";
 
 export const BooksContext = createContext(undefined);
 
@@ -146,6 +147,15 @@ function App() {
   //     ...state,
   //     cart: state.cart.filter((cartItem) => cartItem.id !== id)
   //   });
+  const removeFromCarts = (id) =>{
+
+    alert(id);
+    setState({
+      ...state,
+      cart: state.cart.filter((cartItem) => cartItem.id !== id)
+    });
+  }
+    
 
   const increase = (id) => {
     setState({
@@ -269,6 +279,13 @@ function App() {
       // alert('No');
     }
   };
+  const checkoutcart = () => {
+    if (window.confirm("Remove all items into your cart?")) {
+      SetProducts([]);
+    } else {
+      // alert('No');
+    }
+  };
 
   // ------Total Product Incart and Total Price of cart
   const cartTotalQty = products.reduce((acc, data) => acc + data.qty, 0);
@@ -281,6 +298,7 @@ function App() {
 
   console.log("Login main local storage ", Username);
 
+   
   // -------------------Cart--
   const handleDropdownClick = () => {
     setDropdownState(!dropdownState);
@@ -317,7 +335,7 @@ function App() {
       >
         <nav class="" data-bs-theme="white" ref={dropdownRef}>
           <Router>
-            <ul className="Navbar-link  d-flex">
+            <ul className="Navbar-link   d-flex">
               {/* <ul className="Navbar-link bg-primary d-flex"> */}
 
               <li>
@@ -358,6 +376,11 @@ function App() {
               <li>
                 <Link to="/shoppingcart" className="fw-bolder">
                   shoppingcart
+                </Link>
+              </li>
+              <li>
+                <Link to="/checkout" className="fw-bolder">
+                checkout
                 </Link>
               </li>
               {readrole == '"3"' ? (
@@ -463,11 +486,11 @@ function App() {
                     <div className="dropdown-menus dropdown-menu-custom">
                       <div className="row justify-content-center m-0">
                         <div>
-                          <h1>Test</h1>
+                      
                           {/* <ShopCart></ShopCart> */}
 
                           {/* shoppingcart----------- */}
-                          <div>
+                          {/* <div>
                             {state.cart.map((product) => (
                               <div className="book" key={product.id}>
                                 <h1>{product.id}</h1>
@@ -476,7 +499,7 @@ function App() {
                                 <h1>{product.pprice}</h1>
                               </div>
                             ))}
-                          </div>
+                          </div> */}
                           {/* shoppingcart----------- */}
                         </div>
 
@@ -504,7 +527,7 @@ function App() {
                               </div>
                             </div>
                             <div className="card-body p-0">
-                              {products.length === 0 ? (
+                              {state.cart.length === 0 ? (
                                 <table className="table cart-table mb-0">
                                   <tbody>
                                     <tr>
@@ -522,20 +545,20 @@ function App() {
                                   <thead>
                                     <tr>
                                       <th>Action</th>
-                                      <th>Product</th>
+                                      <th>Product ID</th>
                                       <th>Name</th>
                                       <th>Price</th>
-                                      <th>Qty</th>
-                                      <th className="text-right">
+                                      {/* <th>Qty</th> */}
+                                      {/* <th className="text-right">
                                         <span id="amount" className="amount">
                                           Total Amount
                                         </span>
-                                      </th>
+                                      </th> */}
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    {products.map((data, index) => {
-                                      const { id, image, name, price, qty } =
+                                    {state.cart.map((data, index) => {
+                                      const { id, image, pname, pprice, qty } =
                                         data;
                                       return (
                                         <tr key={index}>
@@ -543,24 +566,26 @@ function App() {
                                             <button
                                               className="prdct-delete"
                                               onClick={() =>
-                                                removeFromCart(index)
+                                                removeFromCarts(id)
                                               }
                                             >
+                                              
                                               <i className="fa fa-trash-alt"></i>
                                             </button>
                                           </td>
                                           <td>
                                             <div className="product-img">
-                                              <img src={image} alt="" />
+                                            {id}
+                                              {/* <img src={image} alt="" /> */}
                                             </div>
                                           </td>
                                           <td>
                                             <div className="product-name">
-                                              <p>{name}</p>
+                                              <p>{pname}</p>
                                             </div>
                                           </td>
-                                          <td>${price}</td>
-                                          <td>
+                                          <td>${pprice}</td>
+                                          {/* <td>
                                             <div className="prdct-qty-container">
                                               <button
                                                 className="prdct-qty-btn"
@@ -588,17 +613,17 @@ function App() {
                                                 <i className="fa fa-plus"></i>
                                               </button>
                                             </div>
-                                          </td>
-                                          <td className="text-right">
-                                            ${(qty * price).toFixed(0)}
-                                          </td>
+                                          </td> */}
+                                          {/* <td className="text-right">
+                                            ${(qty * pprice).toFixed(0)}
+                                          </td> */}
                                         </tr>
                                       );
                                     })}
                                   </tbody>
                                   <tfoot>
                                     <tr>
-                                      <th>&nbsp;</th>
+                                   
                                       <th colSpan="3">&nbsp;</th>
                                       <th>
                                         Items in Cart
@@ -614,6 +639,21 @@ function App() {
                                           $ {cartTotalAmount.toFixed(0)}
                                         </span>
                                       </th>
+                                      <th>
+                                      <Link to="/checkout" className="fw-bolder">
+              
+                
+                                         <button
+                                          className="btn btn-primary mt-0 btn-sm"
+                                          onClick={() => checkoutcart()}
+                                         >
+                                          <i className="fa fa-cart-shopping m-2"></i>
+                                          <span className="text-white" >Checkout</span>
+                                          
+                                         </button>
+
+                                         </Link>
+                                  </th>
                                     </tr>
                                   </tfoot>
                                 </table>
@@ -645,6 +685,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/checkout" element={<Checkout    checkoutdata={data}/>} />
               <Route
                 // exact
                 // path="/page/:id"
