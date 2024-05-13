@@ -642,17 +642,17 @@ function App() {
                                       <th>
                                       <Link to="/checkout" className="fw-bolder">
               
-                
                                          <button
                                           className="btn btn-primary mt-0 btn-sm"
                                           onClick={() => checkoutcart()}
                                          >
                                           <i className="fa fa-cart-shopping m-2"></i>
-                                          <span className="text-white" >Checkout</span>
+                                          <span className="text-white" >Checkout 1</span>
                                           
                                          </button>
-
                                          </Link>
+              
+                                         
                                   </th>
                                     </tr>
                                   </tfoot>
@@ -685,7 +685,8 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/admin" element={<Admin />} />
-              <Route path="/checkout" element={<Checkout    checkoutdata={data}/>} />
+              <Route path="/checkout" element={<Checkout    checkoutdata={state.cart}/>} />
+              {/* <Route path="/checkout" element={<Checkout />} /> */}
               <Route
                 // exact
                 // path="/page/:id"
