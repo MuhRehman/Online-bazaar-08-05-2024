@@ -372,6 +372,7 @@ color: whitesmoke;
   display: grid;
   grid-template-columns: minmax(16ch, 1fr) 4fr;
   align-items: baseline;
+  width:800px;
 }
 .checkout form .input-group .label {
   padding-right: 1rem;
