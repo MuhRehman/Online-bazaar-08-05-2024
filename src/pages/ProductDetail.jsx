@@ -54,7 +54,12 @@ export default function ProductDetail() {
     
 
     const handleInputChange = (e, type) => {
-       
+        let newDate = new Date();
+
+        let date = newDate.getDate();
+        let month = newDate.getMonth();
+
+
         switch(type){
          
             
@@ -93,10 +98,7 @@ export default function ProductDetail() {
     function handleSubmit(){
 
 
-        let newDate = new Date();
-
-        let date = newDate.getDate();
-        let month = newDate.getMonth();
+       
         // let getCurrentDateandTime = month.toLocaleString() + Date().toLocaleString();
 
         setuserId("1");
@@ -124,7 +126,7 @@ export default function ProductDetail() {
                   feedbackDatetime: feedbackDatetime
               }
               
-              console.log(' Feedback Data',Data);
+              console.log(' Feedback Data----->',Data);
       
   
               fetch(url, {
@@ -145,7 +147,7 @@ export default function ProductDetail() {
                 // setSpinner(false);
                 alert("Not Insert HS");
               //   debugger
-            //   setSpinner(false);
+              //   setSpinner(false);
                   setError(err);
                   console.log(err);
               });
@@ -227,10 +229,10 @@ export default function ProductDetail() {
 
 <>
 <div>
-    <h1>1{userid?userid :""}   </h1>
-    <h1>2{userfeedback?userfeedback :""}</h1>
-    <h1>3{userratings?userratings :""}</h1>
-    <h1>4{feedbackDatetime?feedbackDatetime :""}</h1>
+    <h1>--{userid?userid :""}   </h1>
+    <h1>--{userfeedback?userfeedback :""}</h1>
+    <h1>--{userratings?userratings :""}</h1>
+    <h1>--{feedbackDatetime?feedbackDatetime :""}</h1>
 </div></>
 <form class="container">
   <h1 class="heading">Give feedback</h1>
