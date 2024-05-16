@@ -17,6 +17,8 @@ import { useState, useEffect, useRef } from "react";
 import ShopCart from "./components/ShopCart.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Seller from "./pages/Seller.jsx";
+import Feedbackdashboard from "./pages/Feedbackdashboard.jsx";
+import UsersManagement from "./pages/UsersManagement.jsx";
 
 export const BooksContext = createContext(undefined);
 
@@ -692,6 +694,8 @@ function App() {
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/seller" element={<Seller />} />
+              <Route path="/feedbackdashboard" element={<Feedbackdashboard />} />
+              <Route path="/usersmanagement" element={<UsersManagement />} />
               <Route path="/checkout" element={<Checkout    checkoutdata={state.cart}/>} />
               {/* <Route path="/checkout" element={<Checkout />} /> */}
               <Route
