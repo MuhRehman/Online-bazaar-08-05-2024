@@ -6,6 +6,7 @@ export default function Checkout(checkoutdata) {
   const [orderaddress, setOrderAddress] = useState("");
   const [Showdata, setShowdata] = useState("");
   const [Error, setError] = useState("");
+  const [ spinner, setSpinner ] = useState(true);
   // const [total, setTotal] = useState(0);
 
   // console.log("checkoutdata_id", checkoutdata);
@@ -55,7 +56,7 @@ export default function Checkout(checkoutdata) {
   };
 
   function handleSubmit() {
-    // setSpinner(true);
+    setSpinner(false);
 
     if (orderemail !== "" && orderaddress !== "") {
       var url = "http://localhost/backend/mailer/orderconfirmcopy.php";
@@ -83,7 +84,7 @@ export default function Checkout(checkoutdata) {
           alert("The order has been successfully placed.!");
           // navigate("/login");
           // debugger
-
+          setSpinner(true);
           console.log("Response Order: ", response);
           // setMsg(response[0].result);
         })
@@ -234,131 +235,142 @@ export default function Checkout(checkoutdata) {
             })}
           </div>
         </header>
-
-        <div class="container">
-          <div class="table-responsive">
-            <table class="table table-bordered   table-striped">
-              <thead class="table__head">
-                <tr class="winner__table">
-                  <th>S/N</th>
-                  <th>
-                    <i class="fa fa-user" aria-hidden="true"></i> Product ID
-                  </th>
-                  <th>
-                    <i class="fa fa-product-hunt" aria-hidden="true"></i>{" "}
-                    Product Name
-                  </th>
-                  <th>
-                    <i class="fa fa-money" aria-hidden="true"></i>
-                    Price
-                  </th>
-                  <th>
-                    <i class="fa fa-calendar-o" aria-hidden="true"></i>{" "}
-                    Manufacture Date
-                  </th>
-                  <th>
-                    {" "}
-                    <i class="fa  fa-list-alt" aria-hidden="true"></i> Category
-                  </th>
-                  <th>
-                    <i class="fa fa-trophy" aria-hidden="true"></i>{" "}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {checkoutdata.checkoutdata.length > 0
-                  ? checkoutdata.checkoutdata.map((productData, index) => {
-                      // <h1>sdsdsdskfdsfn{productData.name}</h1>
-                      return (
+        {  spinner ? (
+                <div>
+                  {/* <h1>{spinner}</h1> */}
+                  <div class="container">
+                  <div class="table-responsive">
+                    <table class="table table-bordered   table-striped">
+                      <thead class="table__head">
                         <tr class="winner__table">
-                          <td>{productData.id}</td>
-                          <td>{productData.pname}</td>
-                          <td>{productData.pprice}</td>
-                          <td>{productData.pmname}</td>
-                          <td>{productData.pmodel}</td>
-                          <td>{productData.ptype}</td>
-
+                          <th>S/N</th>
                           <th>
-                            Gold Coin{" "}
-                            <span className="d-none">
-                              {" "}
-                              {(total1 = total1 + parseInt(productData.pprice))}
-                            </span>
-                            <img
-                              src="https://batafestivepromo.bigcityexperience.com/assets/frontend/img/g_coin.png"
-                              class="coin"
-                            />
+                            <i class="fa fa-user" aria-hidden="true"></i> Product ID
+                          </th>
+                          <th>
+                            <i class="fa fa-product-hunt" aria-hidden="true"></i>{" "}
+                            Product Name
+                          </th>
+                          <th>
+                            <i class="fa fa-money" aria-hidden="true"></i>
+                            Price
+                          </th>
+                          <th>
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>{" "}
+                            Manufacture Date
+                          </th>
+                          <th>
+                            {" "}
+                            <i class="fa  fa-list-alt" aria-hidden="true"></i> Category
+                          </th>
+                          <th>
+                            <i class="fa fa-trophy" aria-hidden="true"></i>{" "}
                           </th>
                         </tr>
-                      );
-                    })
-                  : <div><h1 className="d-flex text-center">Empty</h1></div> }
+                      </thead>
+                      <tbody>
+                        {checkoutdata.checkoutdata.length > 0
+                          ? checkoutdata.checkoutdata.map((productData, index) => {
+                              // <h1>sdsdsdskfdsfn{productData.name}</h1>
+                              return (
+                                <tr class="winner__table">
+                                  <td>{productData.id}</td>
+                                  <td>{productData.pname}</td>
+                                  <td>{productData.pprice}</td>
+                                  <td>{productData.pmname}</td>
+                                  <td>{productData.pmodel}</td>
+                                  <td>{productData.ptype}</td>
 
-                <div className="d-flex justify-content-end">
-                  <h6 className="ml-auto">
-                    Total <span className="m-1"> {total1} </span>
-                  </h6>
+                                  <th>
+                                    Gold Coin{" "}
+                                    <span className="d-none">
+                                      {" "}
+                                      {(total1 = total1 + parseInt(productData.pprice))}
+                                    </span>
+                                    <img
+                                      src="https://batafestivepromo.bigcityexperience.com/assets/frontend/img/g_coin.png"
+                                      class="coin"
+                                    />
+                                  </th>
+                                </tr>
+                              );
+                            })
+                          : <div><h1 className="d-flex text-center">Empty</h1></div> }
+
+                        <div className="d-flex justify-content-end">
+                          <h6 className="ml-auto">
+                            Total <span className="m-1"> {total1} </span>
+                          </h6>
+                        </div>
+                      </tbody>
+                    </table>
+                  </div>
+                 </div>
+
+                 <div>
+                  <form action="post">
+                    <div class="input-group">
+                      <div class="label">
+                        <label for="name">Full Name</label>
+                      </div>
+                      <div class="input">
+                        <input
+                          type="text"
+                          id="fullname"
+                          name="fname"
+                          placeholder="Name"
+                          value={fname}
+                          onChange={(e) => handleInputChange(e, "fname")}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="input-group">
+                      <div class="label">
+                        <label for="number">Email</label>
+                      </div>
+                      <div class="input numbers">
+                        <input
+                          type="email"
+                          id="orderemail"
+                          name="orderemail"
+                          placeholder="Email"
+                          value={orderemail}
+                          onChange={(e) => handleInputChange(e, "orderemail")}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="input-group">
+                      <div class="label">
+                        <label for="cvc">Address</label>
+                      </div>
+                      <div class="input">
+                        <input
+                          type="text"
+                          id="address"
+                          name="orderaddress"
+                          placeholder="Address"
+                          value={orderaddress}
+                          onChange={(e) => handleInputChange(e, "orderaddress")}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="input-group">
+                      <button onClick={handleSubmit}>Confirm my order</button>
+                    </div>
+                  </form>
                 </div>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                </div>
 
-        <div>
-          <form action="post">
-            <div class="input-group">
-              <div class="label">
-                <label for="name">Full Name</label>
+                    )  : (
+              <div>
+                <div id="spinner" class="container">
+                  <div class="loading"></div>
+                </div>
               </div>
-              <div class="input">
-                <input
-                  type="text"
-                  id="fullname"
-                  name="fname"
-                  placeholder="Name"
-                  value={fname}
-                  onChange={(e) => handleInputChange(e, "fname")}
-                  required
-                />
-              </div>
-            </div>
-            <div class="input-group">
-              <div class="label">
-                <label for="number">Email</label>
-              </div>
-              <div class="input numbers">
-                <input
-                  type="email"
-                  id="orderemail"
-                  name="orderemail"
-                  placeholder="Email"
-                  value={orderemail}
-                  onChange={(e) => handleInputChange(e, "orderemail")}
-                  required
-                />
-              </div>
-            </div>
-            <div class="input-group">
-              <div class="label">
-                <label for="cvc">Address</label>
-              </div>
-              <div class="input">
-                <input
-                  type="text"
-                  id="address"
-                  name="orderaddress"
-                  placeholder="Address"
-                  value={orderaddress}
-                  onChange={(e) => handleInputChange(e, "orderaddress")}
-                  required
-                />
-              </div>
-            </div>
-            <div class="input-group">
-              <button onClick={handleSubmit}>Confirm my order</button>
-            </div>
-          </form>
-        </div>
+            )}
         <div></div>
       </section>
     </>

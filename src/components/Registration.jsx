@@ -307,7 +307,7 @@ const Registration = () => {
                             <option   selected>Open this select you role</option>
                             <option value="1">Customer/Buyer </option>
                             <option value="2">Seller</option>
-                            <option value="3">Admin</option>
+                            {/* <option value="3">Admin</option> */}
                           </select>
                         </div>
                         <div className="form-outline mb-4">

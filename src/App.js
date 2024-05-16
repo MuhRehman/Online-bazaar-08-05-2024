@@ -16,6 +16,7 @@ import Home from "./pages/Home.jsx";
 import { useState, useEffect, useRef } from "react";
 import ShopCart from "./components/ShopCart.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Seller from "./pages/Seller.jsx";
 
 export const BooksContext = createContext(undefined);
 
@@ -383,6 +384,11 @@ function App() {
                 checkout
                 </Link>
               </li>
+              <li>
+                <Link to="/seller" className="fw-bolder">
+                Seller Panel
+                </Link>
+              </li>
               {readrole == '"3"' ? (
                 <li>
                   <Link to="/admin" className="fw-bolder">
@@ -685,6 +691,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/seller" element={<Seller />} />
               <Route path="/checkout" element={<Checkout    checkoutdata={state.cart}/>} />
               {/* <Route path="/checkout" element={<Checkout />} /> */}
               <Route
