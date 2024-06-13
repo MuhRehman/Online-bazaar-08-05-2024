@@ -277,7 +277,7 @@ export default function Searchproduct({ productDataObj, size }) {
                     <p> Price :<span>{productitemlist.pprice}</span></p>
                     <h6>Type  : {productitemlist.ptype}</h6>
                     <button>Add to Cart</button>
-                    <button>Testing Cart Button </button>
+                    <button>Testing Cart Button 11</button>
                     <button onClick={() => context.addToCart(productitemlist)}>Add Context to Cart</button>
                    </div>
                    {/* </Link> */}
